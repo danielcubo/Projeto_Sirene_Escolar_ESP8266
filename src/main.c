@@ -37,7 +37,7 @@ void delay_ms(volatile unsigned int ms) {
     }
 }
 
-void tocar_campainha(unsigned int milissegundos) {
+void tocar_sinal(unsigned int milissegundos) {
     GPIO_OUT_SET = (1 << RELAY_PIN);    // Ativa o Relé
     delay_ms(milissegundos);             // Mantém tocando (ex: 3000ms = 3 segundos)
     GPIO_OUT_CLEAR = (1 << RELAY_PIN);  // Desliga o Relé
@@ -57,9 +57,9 @@ int uart_receber_byte(unsigned char *byte) {
 }
 
 // 4. PONTO DE ENTRADA DO HARDWARE
-void call_user_start(void) __attribute__((section(".text")));
+void call_rst(void) __attribute__((section(".text")));
 
-void call_user_start(void) {
+void call_rst(void) {
     // Configura pino do Relé como Saída
     GPIO_ENABLE |= (1 << RELAY_PIN);
     GPIO_OUT_CLEAR = (1 << RELAY_PIN); // Garante campainha desligada ao iniciar
@@ -104,7 +104,7 @@ void call_user_start(void) {
             // Checagem da tabela de horários (executada apenas uma vez a cada virada de minuto)
             for (int i = 0; i < TOTAL_HORARIOS; i++) {
                 if (horarios_escola[i].hora == hora_atual && horarios_escola[i].minuto == minuto_atual) {
-                    tocar_campainha(4000); // Toca por 4 segundos
+                    tocar_sinal(4000); // Toca por 4 segundos
                     break; 
                 }
             }
