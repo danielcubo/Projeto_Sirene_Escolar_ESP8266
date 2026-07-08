@@ -2,7 +2,7 @@
 Automatizar a Sirene da Escola com o chip ESP8266
 
 ## `1.1` Objetivo do Projeto
-- Automatizar a companhia da escola com os materiais disponíveis na Robótica.
+- Aproveitar o Laboratório de Robótica da Escola, para ensinar os alunos como automatizar a companhia da escola com os materiais disponíveis no laboratório.
 
 ## `1.2` Horários da campanhia da Escola
 - **Turno da manhã**:
@@ -34,12 +34,13 @@ Automatizar a Sirene da Escola com o chip ESP8266
 - **Aluno(a):** Davi
 
 ## `1.4` Ferramentas para o desenvolvimento do código
+- Windows 11 Pro (Como os alunos estão acostumados com Windows, preferi continuar com o Windows. Mas é um preferível uma distribuição Linux.)
 - Visual Studio Code
 - GCC para o Windows. Para isso vamos usar o MSYS2 (Interface CLI para a instalação do MinGW no Windows)
 - Makefile
 
 ### `1.4.1` Pacotes e dependências
-1. Instalar dependências básicas (Python e Make):
+1. Instalar dependências básicas no MSYS2 (Python e Make):
 ```bash
 pacman -S make python python-pip mingw-w64-ucrt-x86_64-gcc
 ```
@@ -403,5 +404,4 @@ O ciclo baseia-se em um registrador interno essencial: o **PC** *Program Counter
 
 - **Passo 1**:  Energização/Reset
 
-O processador envia o endereço co
-ntido no **PC** através do barramento de endereços e lê a instrução que está na memória d programa
+O processador envia o endereço contido no **PC** através do barramento de endereços e lê a instrução que está na memória d programa
