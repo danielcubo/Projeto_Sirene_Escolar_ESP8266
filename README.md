@@ -1,4 +1,4 @@
-# `1.` Projeto_Sirene_Escolar_ESP8266
+# `1.` Automatizar a Sirene de Horários de uma Escola
 Automatizar a Sirene da Escola com o chip ESP8266
 
 ## `1.1` Objetivo do Projeto
