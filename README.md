@@ -1,10 +1,40 @@
-# `1.` Automatizar a Sirene de Horários de uma Escola
+# `1.` O Projeto
 Automatizar a Sirene da Escola com o chip ESP8266
 
-## `1.1` Objetivo do Projeto
-- Aproveitar o Laboratório de Robótica da Escola, para ensinar os alunos como automatizar a companhia da escola com os materiais disponíveis no laboratório.
+# `2` Contexto do Projeto
+Como Técnico de Informática de uma Escola Municipal do Município de Montes Claros - MG, eu tive a iniciativa de automatizar a sirene de troca de horários.
 
-## `1.2` Horários da campanhia da Escola
+Como eu já ensinava programação em "C" para os alunos do projeto, eu propus a Orientadora do Projeto, que eu aproveitasse essa demanda técnica da escola para colocar os alunos para participarem do projeto.
+
+Então esse projeto pretende mostrar de forma detalhada como usamos o chip ESP8266, que se encontrava disponível nos kits do Laboratório do Mais Ciência, e também trazer conceitos sobre Arquitetura de Chips e Programação Embarcada.
+
+Curtam essa viagem!
+
+# `3` Princípios do Projeto
+1. Formação digital dos alunos
+
+# `4` Objetivos do Projeto
+1. Aproveitar uma demanda técnica para ensinar os alunos da escola
+2. Levar mais entendimento aos alunos interessados em sistemas embarcados.
+3. Fomentar a multidisciplinaridade na escola.
+4. Demostrar como a tecnologia pode ajudar em coisas do dia a dia das pessoas, da comunicadade, etc.
+
+# `5` Diretrizes do Projeto
+Usando uma demanada como base, nós precisamos:
+1. Entender a demanda da escola.
+2. Como resolver a demanda da escola?
+3. Como Implantar o Projeto?
+4. Fornecer detalhes técnicos do projeto.
+
+## `5.1` Entender a demanda da escola
+Eu percebi que a sirene da escola era atuada de maneira manual por uma pessoa da secretaria. Se tratava de muitos horários em que um pessoa precisava parar o que estava fazendo e apertar o interruptor.
+
+Quais os problemas percebidos?
+1. A pessoa pode esquecer de tocar a campanhia
+2. A campainha pode tocar atrasado
+3. Demanda tempo para alguém ter ir atuar a campainha
+
+Horários da campanhia da Escola
 - **Turno da manhã**:
     - 7:00 (Início do turno)
     - 7:50 (Segundo horário)
@@ -25,15 +55,46 @@ Automatizar a Sirene da Escola com o chip ESP8266
     - 17:25 (Término do turno e Início do horário de reforço escolar)
     - 18:20 (Término de todas as atividades)
 
-## `1.3` Integrantes do Projeto
-- **Orientador(a):** Júnea
-- **Suporte Técnico:** Daniel
-- **Aluno(a):** Izabela
-- **Aluno(a)**: Cauã 
-- **Aluno(a):** Lucas
-- **Aluno(a):** Davi
+## `5.2` Como resolver o problema?
+Seria possível usar interruptores inteligentes facilmente programáveis por aplicativos. Isso resolveria o problema de maneira rápida e prática. Comprou, instalou e está funcionando. O problema dessa solução é que ela não agrega muito valor, a não ser o ganho de a escola estar operando de maneira mais inteligente.
 
-## `1.4` Ferramentas para o desenvolvimento do código
+Porém a escola possuía uma estrutura muito boa.
+A escola contava com:
+1. laboratório de iformática
+2. técnico de informática exclusivo da escola
+3. laboratório de robótica
+4. equipamentos como, impressoras 3D, chips e toda uma estrutura de materiais que poderiam ser usados.
+
+Então me veio a ideia de juntar alguns alunos do projeto, juntar os materias que o laboratório tinha disponível, automatizar a escola e aprender como uma necessidade da escola pode ser suprida pelos próprios alunos que estão ali para aprenderem isso.
+
+Os materias que a Escola possuía:
+1. chip ESP8266
+2. módulo relé 5V
+3. fios
+4. ferro de solda
+5. Impressora 3D
+
+Ou seja, seria literalmente unir o útil ao agradável.
+
+## `5.3` Como implantar o projeto?
+A maioria dos computadores da escola utilizam o Sistema Operacional Windows.
+
+Eu, particularmente, gosto de usar uma distribuição Linux para tarefas profissionais. Eu uso 2 sistemas operacionais como base: Ubuntu e Debian.
+
+Porém esse projeto será feito baseado na plataforma Windows.
+ 
+Um outro detalhe, é que os alunos do projeto "Mais Ciência" usam a IDE do Arduino para programar. A IDE do arduino é muito boa, porém ela esconde boa parde da estrutura da programação embarcada. E de novo a gente se esbarra no problema de apenas resolver o problema, mas não entende direito o que foi feito.
+
+Então na minha concepção, se estou usando uma demanda para entender conceitos de programação embarcada, é necessário que usemos o mínimo de abstração possível. Por isso vamos usar IDE's mais enxutas como o VS Code e o MinGW para compilar, linkeditar e gravar o código no chip.
+
+Ferramentas:
+- Windows 11 Pro
+    - Link para baixar a ISO [https://www.microsoft.com/pt-br/software-download/windows11](https://www.microsoft.com/pt-br/software-download/windows11)
+- VS Code
+    - Link para baixar o VS Code [https://code.visualstudio.com/download?_exp_download=fb315fc982](https://code.visualstudio.com/download?_exp_download=fb315fc982)
+
+
+Nós  Ferramentas para o desenvolvimento do código
 - Windows 11 Pro (Como os alunos estão acostumados com Windows, preferi continuar com o Windows. Mas é um preferível uma distribuição Linux.)
 - Visual Studio Code
 - GCC para o Windows. Para isso vamos usar o MSYS2 (Interface CLI para a instalação do MinGW no Windows)
