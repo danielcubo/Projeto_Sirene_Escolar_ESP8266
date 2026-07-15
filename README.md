@@ -1,16 +1,14 @@
 # `1.` O Projeto
 Automatizar a Sirene da Escola com o chip ESP8266
 
-# `2` Contexto do Projeto
-Sou Técnico de Informática e Analista e Desenvolvedor de Sistemas.
-
-Atuando como Técnico de Informática em uma escola, notei que a sirene desta escola era acionada manualmente.
+# `2.` Contexto do Projeto
+Sou Técnico de Informática. Atuando como Técnico de Informática em uma escola, notei que a sirene desta escola era acionada manualmente.
 
 Existe, no mercado, soluções relativamente simples para esse propósito, como instalar *Relés Inteligentes Wi-Fi*.
 
-Mas a escola possui insumos eletroeletrônicos como o chip ESP8266.
+Mas, considerando que a escola possui insumos eletroeletrônicos, vamos usar uma solução mais complexa que terá uma solução muito mais profissional e irá agregar muito mais para a escola.
 
-Qual é a vantegem de se usar o Chip ESP8266 ao invés do Relé Inteligente?
+Nos materias de Ciência da Escola, possui um chip que se chama ESP8266. Qual é a vantegem de se usar o Chip ESP8266 ao invés do Relé Inteligente?
 
 Os alunos participariam do projeto e resolveriam um problema real da escola.
 
@@ -18,16 +16,16 @@ Então esse projeto pretende mostrar de forma detalhada como podemos usar o chip
 
 Curtam essa viagem!
 
-# `3` Princípios do Projeto
+# `3.` Princípios do Projeto
 1. Instrução Digital de Base.
 
-# `4` Objetivos do Projeto
+# `4.` Objetivos do Projeto
 1. Aproveitar uma demanda da escola e colocar os alunos para participarem.
 2. Levar conhecimento a pessoas interessadas em programação embarcada.
 3. Fomentar a multidisciplinaridade na escola.
 4. Demostrar como a tecnologia pode ajudar em coisas do dia a dia das pessoas, da comunicadade, etc.
 
-# `5` Diretrizes do Projeto
+# `5.` Diretrizes do Projeto
 Usando uma demanada como base, nós precisamos:
 1. Entender a demanda da escola.
 2. Como resolver a demanda da escola?
@@ -105,7 +103,7 @@ Um outro detalhe, é que os alunos do projeto "Mais Ciência" usam a IDE do Ardu
     - Link para baixar o VS Code [https://code.visualstudio.com/download?_exp_download=fb315fc982](https://code.visualstudio.com/download?_exp_download=fb315fc982)
 - GCC
 
-### `1.4.1` Pacotes e dependências
+### `5.3.3` Pacotes e dependências
 1. Instalar dependências básicas no MSYS2 (Python e Make):
 ```bash
 pacman -S make python python-pip mingw-w64-ucrt-x86_64-gcc
@@ -117,47 +115,142 @@ pip install esptool
 ```
 3. Obter o Compilador Xtensa (xtensa-lx106-elf-gcc):
 O projeto oficial [ESP-open-sdk](https://github.com/pfalcon/esp-open-sdk) ou os binários da própria Espressif fornecem o compilador. Você precisará baixar o toolchain do GCC para Xtensa LX106 e adicionar a pasta bin dele ao seu PATH no MSYS2.
-
-### `1.4.2` Compilação
+### `5.3.4` Compilação
 ```bash
 make
 ```
-### `1.4.3` Gravação
+### `5.3.5` Gravação
 ```bash
 make flash
 ```
-## `1.5` Componentes de Hardware que usaremos
-1. Jumpers para conexão
-2. PCB NodeMCU V2 (contém o chip ESP8266)
-3. Módulo Relé 1 Canal de 5V e 10A
-4. Caixa Plástica Organizadora para abrigar o chip ESP8266 e o Relé.
 
-### `1.5.1` Convenção de cores dos jumpers:
-Existem convenções e normas importantes para garantir a segurança e facilitar a manutenção do projeto, separadas entre a parte de **baixa tensão** (eletrônica) e **alta tensão** (rede elétrica)
+# `6.` Itens Necessários
+1. Fios do tipo **rídigo** 22 AWG
+2. Fios do tipo **flexível** 2,5 mm²
+3. Protoboard
+4. PCB NodeMCU V2 (contém o chip ESP8266)
+5. Módulo Relé 1 Canal de 5V e 10A
+6. Caixa Plástica Organizadora para abrigar o chip ESP8266 e o Relé.
 
-#### `1.5.1.1` **DC** $\rightarrow$ Conexões de Baixa Tensão (do ESP8266 para o Módulo Relé)
-Na eletrônica, os elétrons fluem em uma única direção. Esse fluxo é conhecido como **DC (Direct Current *Corrente Contínua*)**. É a energia "estável" usada por praticamente todos os dispositivos eletrônicos.
+## `6.1` Sobre os fios
+Existem convenções e normas importantes para garantir a segurança para o manuseio e instalação de projetos como este.
+
+Os primeiras convenções surgiram na Europa, depois nos Estados Unidos e, depois outros países, como o Brasil, criaram suas próprias normas, baseadas nessas normas internacionais. Vamos aproveitar para entender um pouco dessas normas.
+
+Precisamos entender essas normas para que o projeto tenha uma implementação conforme as normas sugerem, e uma implantação (instalação) segura.
+
+### Normas Internacionais: A Origem da Padronização
+Os termos AC e DC são oficializados pelas maiores entidades de padronização global:
+
+#### IEC (Foco: Eletricidade e Conectores Globais)
+A **IEC (International Electrotechnical Commission)** foi fundada em Londres em 1906, hoje sediada em Genebra na Suíça, é a principal organização global de normas elétricas. Em seus documentos técnicos, a IEC adota AC e DC, mas frequentemente prefere usar símbolos visuais universais para evitar barreiras linguísticas:
+- $\sim$ (Onda senoidal) para indicar **AC (Alternating Current ou *Corrente Alternada*)**.
+- $\equiv$ ou $=$ (Linha reta com traços) para indicar **DC (Direct Current ou *Corrente Contínua*)**.
+
+Exemplos:
+- A **Tomada de 3 pinos (IEC 60906-1)**: O padrão de tomada de 3 pinos não foi inventado aqui. Ele foi criado pela IEC nos anos 1980 para ser a tomada universal do planeta (embora apenas o Brasil e a África do Sul o tenham adotado)
+- O **Cabo de Força do Computador (IEC 60320 / C13)**: Aquele cabo preto padrão com 3 furos trapezoidais que liga a fonte do computador, monitores e panelas elétricas na tomada. Ele funciona igual no mundo inteiro.
+- **AC/DC (IEC 60364)**: Traz diretrizes sobre alte tensão e baixa tensão.
+
+#### IEEE (Foco: Telecomunicações e Eletrônica)
+A **IEEE (Institute of Electrical and Electronics Engineers)** é uma entidade americana que dita padrões globais de engenharia. A **IEEE** padroniza o uso estrito de **AC** e **DC** em diagramas, artigos científicos e manuais de equipamentos.
+
+Exemplos:
+- **Cabo de Rede / Ethernet (IEEE 802.3)**: A padronização dos cabos de rede azuis/amarelos com conectores RJ-45 usados para conectar redes locais e internet via cabo.
+- **Wi-Fi (IEEE 802.11)**: O Wi-Fi é apenas o nome comercial. Tecnicamente, todas as redes sem fio seguem a norma IEEE 802.11 (e suas evoluções como 802.11ax ou 802.11ax).
+
+#### ANSI (Foco: Layouts, Código e Indústria Americana)
+A **ANSI (American National Standards Institute)** padroniza sistemas, layouts e processos industriais americanos que ganharam o mundo.
+
+Exemplos:
+- **Teclado ANSI**: O teclado conhecido como **Padrão Americano** é, na verdade, o padrão **ANSI**. Ele não possui algumas teclas que existem no teclado padrão **ABNT2**.
+- **Linguagem ANSI C**: A linguagem de programação `C`, desenvolvida por Denis Ritchie, em 1989, é padronizada pela ANSI. Esse padrão garantiu que o mesmo código rodasse em computadores da IBM, Apple e Microsoft, servindo de base para a criação dos sistemas operacionais modernos (como Windows e Linux).
+
+### Normas Brasileiras
+A **ABNT (Associação Brasileira de Normas Técnicas)** é o órgão responsável pela padronização técnica no Brasil. A ABNT adapta as regras internacionais para o mercado brasileiro e cria regras exclusivas para o país.
+
+Exemplos:
+- **Teclado ABNT2**: O teclado padrão brasileiro, que traz a tecla **`Ç`** e a tecla **`AltGr`** (usada para fazer símbolos como `²` ou `³`).
+- **Disjuntores Residenciais (NBR NM 60898)**: Os disjuntores brancos de que trazem o trilho padrão DIN (Deutsches Institute fur Normung), que ficam no quadro de luz da sua casa. Esses disjuntores garantem que a energia seja interrompida caso haja um curto-circuito para que a fiação não pegue fogo.
+- **ABNT NBR 5410 (Instalações Elétricas de Baixa Tensão)**: Esta norma é baseada diretamente na norma **IEC 60364**, sobre **AC (Alternating Current ou *Corrente Alternada*)** e **DC (Direct Current ou *Corrente Contínua*)**, que aqui no Brasil se usam as Siglas **CA** para *Corrente Alternada* e **CC** para *Corrente Contínua*
+
+| IEC | ABNT
+|-|-
+|**AC** (Alternating Currente) | **CA** (Corrente Alternada)
+|**DC** (Direct Current) | **CC** (Corrente Contínua)
+
+Mesmo com as normas nacionais exigindo CA e CC, os manuais e componentes vendidos no Brasil ainda usam os termos em inglês devido a dois fatores de mercado:
+
+- Globalização da Cadeia de Suprimentos: Componentes eletrônicos (como chips, fontes chaveadas e multímetros) são fabricados em massa na Ásia para o mundo todo. Imprimir "AC/DC" no plástico do produto atende a todos os mercados simultaneamente, reduzindo custos de fabricação.
+- Evitar Dupla Interpretação: A sigla CC em português pode significar "Corrente Contínua", mas em inglês significa Continuous Current (que tem uma nuance técnica ligeiramente diferente de Direct Current em alguns contextos). Usar a simbologia internacional ou as siglas em inglês elimina ambiguidades para engenheiros do mundo inteiro.
+
+No Brasil, a definição de baixa e alta tensão é padronizada pela norma **NR-10** (Segurança em Instalações e Serviços em Eletricidade), dividindo-se pelos limites de voltagem, em:
+
+1. **Extra-Baixa Tensão (EBT)**
+
+É faixa de tensão que não oferece risco de choque elétrico severo em condições normais.
+| IEC | ABNT | NR-10
+|-|-|-
+|**AC** (Alternating Currente) | **CA** (Corrente Alternada) | Tensões até `50V`
+|**DC** (Direct Current) | **CC** (Corrente Contínua) | Tensões até `120V`
+
+2. **Baixa Tensão (BT)**
+
+É a faixa de tensão utilizada na maioria das residências , comércios e pequenas indústrias. Tomadas residencias de 127V ou 220V, ou redes trifásicas industriais de 380V e 440V, são exemplos de faixa de Baixa Tensão.
+| IEC | ABNT | NR-10
+|-|-|-
+|**AC** (Alternating Currente) | **CA** (Corrente Alternada) | Tensões entre `50V` e `1000V` (1KV)
+|**DC** (Direct Current) | **CC** (Corrente Contínua) | Tensões entre `120V` e `1500V` (1,5KV)
+
+3. **Alta Tensão (AT)**
+
+É a faixa de tensão utilizada para o transporte de grandes quantidades de energia a longas distâncias, minimizando as perdas na fiação. Redes de distribuição urbanas e linhas de transmissão usam uma faixa de Alta Tensão.
+| IEC | ABNT | NR-10
+|-|-|-
+|**AC** (Alternating Currente) | **CA** (Corrente Alternada) | Tensões maiores que `1000V`
+|**DC** (Direct Current) | **CC** (Corrente Contínua) | Tensões maiores que `1500V`
+
+**Nota**: Embora o termo "**Média Tensão (MT)**" seja muito usado por profissionais para se referir à faixa entre **1Kv** e **36,2KV**, em **CA** (Corrente Alternada), formalmente pela lei essa faixa é condiderada um subgrupo da faixa de **Alta Tensão**
+
+Diante desse conhecimento, vamos usar os seguintes fios:
+- Fios do tipo rídigos de seção 22 AWG para o circuito de **extra-baixa tensão**
+- Fios do tipo flexível de seção 2,5 mm² para o circuito de **baixa tensão** 
+
+### Fios rígidos 22 AWG para o circuito em `extra-baixa tensão`
+Na eletrônica, os elétrons fluem em uma única direção. Esse fluxo é conhecido como **DC**. É a energia "estável" usada por praticamente todos os dispositivos eletrônicos.
+
+A escala **AWG (American Wire Gauge ou *Escala Americana de Fios*)** é um padrão internacional muito utilizado para desenvolvimento de projetos em matrizes de contato (protoboards), por 3 motivos principais:
+- **Encaixe Perfeito**: O diâmetro do fio 22 AWG é de aproximadamente 0,64 mm. Essa espessura entra firmemente nos contatos internos da protoboard sem folgas.
+- **Preservação do componente**: Fios mais grosses (como 18 AWG) forçam e danificam as lâminas internas da protoboard. Fios mais finos (como 26 AWG) ficam frouxos e causam mau contato.
+- **Rigidez mecânica**: O fio 22 AWG do tipo **rígido** ou **sólido** é firme o suficiente para ser empurrado para dentro do furo sem dobrar, facilitando a organização do circuito.
+
+Ou seja, para conectar a PCB NodeMCU V2 (ESP8266) ao módulo Relé, usaremos os fios 22 AWG, com as seguintes cores:
 - **Vermelho**: Alimentação Positiva 5V (**VIN**)
 - **Preto**: Terra (**GND**)
 - **Laranja**: Alimentação Positiva 3.3V (específico para diferenciar de 5V).
 - **Amarelo ou Branco**: Sinal (**IN**) que sai do GPIO do ESP8266 e vai para o Relé.
 - **Azul ou Verde**: Outras opções comuns para sinais de dados ou funções especiais.
-#### `1.5.1.2` **AC** $\rightarrow$ Conexões de Alta Tensão (do Relé para a Tomada)
-Na Rede elétrica, a direção do fluxo dos elétrons se inverte periodicamente de forma cíclica (no Brasil, isso ocorre 60 vezes por segundo, ou 60 Hz). Esse tipo de fluxo é conhecido como **AC (Alternating Current *Corrente Alternada*)**.
+
+### Fios flexíveis 2,5 mm² para o circuito em `baixa tensão`
+Na Rede elétrica, a direção do fluxo dos elétrons se inverte periodicamente de forma cíclica (no Brasil, isso ocorre 60 vezes por segundo, ou 60 Hz). Esse tipo de fluxo é conhecido como **AC (Alternating Currente)**.
+
+Para o circuito da tomada usaremos fios do tipo **flexível** com bitola (seção) 2,5 mm². É o padrão mais do que suficiente para o nosso projeto em questão. O fio de 2,5 mm² vai se encaixar bem, tanto se a rede de alta tensão fornece 110V ou 220V.
+
+O fio de 2,5 mm² tem a dimensão da seção suficiente para suportar a corrente da maioria dos aparelhos elétricos sem superaquecer. A norma **NBR 5410** estabelece esta bitola (seção) como mínimo obrigatório para circuitos de tomadas de uso geral.
 
 Ao lidar com a fiação da tomada (AC), deve-se seguir a norma brasileira **NBR 5410**, que é obrigatória para o padrão e segurança elétrica das instalações.
 - **Azul Claro**: Condutor **Neutro** (É como se fosse o negativo em DC)
 - **Verde** ou **Verde com Amarelo**: Condutor de Proteção (**Terra**)
 - **Vermelho, Preto ou Marrom**: Condutor **Fase** (É por onde passa a corrente, ou seja, é como se fosse o positivo em DC)
 
-### `1.5.2` PCB NodeMCU V2
+## `6.2` PCB NodeMCU V2
 ![PCB NodeMCU V2](/assets/nodemcu-esp8266.jpeg)
+
 A **PCB** (Printed Circuit Board ou *Placa de Circuito Impresso*) é a placa física de cor preta ou azul onde todos os componentes estão soldados.
 
 A PCB do NodeMCU serve como uma "ponte de acesso". Ela possui vários componentes que servem de entrada física para manipular o chip ESP8266.
 
-#### 1.1 O chip ESP8266
-
+### `6.2.1` O chip ESP8266
 Dentro do módulo metálico está o chip real e um chip de memória Flash externa. A capa de metal serve como blindagem eletromagnética (Gaiola de Faraday). Ela impede que ondas de rádio externas (como o sinal do seu celular) interfiram no Wi-Fi do chip, e garante as certificações de segurança internacionais.
 
 Se você arrancasse a capinha de metal, veria uma patilha preta de silício bem pequena. Esse é o microcontrolador **ESP8266** criado pela **Espressif Systems**.
@@ -176,7 +269,7 @@ Caraterísticas do chip ESP8266:
 - **ISA**: Xtensa (*Tensilica*). [clique aqui](https://dl.espressif.com/github_assets/espressif/xtensa-isa-doc/releases/download/latest/Xtensa.pdf)
 - **Registradores**: 32 bits.
 
-#### 1.2 Componentes de Comunicação
+### `6.2.2` Componentes de Comunicação do módulo PCB NodeMCU V2
 - **Porta Micro-USB**: Serve para transferir o código compilado para o chip. Também serve de alimentação (5V).
 - **Chip Conversor USB-Serial (Geralmente o CP2102 ou CH340)**: É um chip retangular bem pequeno, perto da entrada USB. Ele traduz os dados que vêm do cabo USB (do seu VS Code/MSYS2) para o protocolo serial assíncrono **UART *Universal Asynchronous Receiver/Transmitter*** nos pinos de trasmissão (`TX`) e recepção (`RX`) do ESP8266.
 - **Circuito de Auto-Reset/Flash**: Composto por dois transistores minúsculos próximos ao chip serial. Eles monitoram as linhas de cotrole `DTR` e `RTS` da USB. Quando você digita `make flash` no terminal do computador, depois de ter compilado o código, este circuito "aperta" eletronicamente o pino RESET e joga o `GPIO 0` para o terra (`GND`), forçando o ESP8266 a entrar em modo de gravação sem que você precise tocar na placa.
@@ -188,12 +281,12 @@ Caraterísticas do chip ESP8266:
 - **No Linux**
     - No Debian, o driver do `CH340` já vem **compilado direto dentro do Kernel Linux**. Você não precisa baixar ou instalar nada. Basca plugar a PCB do ESP8266 no computador.
     - **Como descobrir o nome no Debian**: Abra o terminal e digite o comando `ls /dev/ttyUSB*`. O terminal vai responder algo como: `/dev/ttyUSB0`.
-#### 1.3 Componentes de Alimentação e Controle
+### `6.2.3` Componentes de Alimentação e Controle do módulo PCB NodeMCU V2
 - **Regulador de Tensão de 3.3V (AMS1117-3.3)**: O ESP8266 queima se receber os 5V diretos da USB. Este componente de 3 pernas reduz os 5V da USB de forma estável para 3.3V, que é a tensão de operação do chip e do módulo.
 - **Botão RST(Reset)**: Reinicia o microcontrolador manualmente. Ele joga o pino `RST` temporariamente para o `GND`. Ao soltar, o chip executa a função `call_rst()` no nosso código C.
 - **Botão Flash (ou USER)**: Conectado ao `GPID 0`. Serve para forçar o modo de gravação manualmente caso o circuito automático falhe (basta segurar o botão `FLASH`, dar um clique no botão `RST` e soltar o `FLASH`).
 - **LED Integrado (LED_BUILTIN)**: A placa possui um pequeno LED azul soldado perto do pino D4 (conectado ao `GPIO 2`). Ele é útil para testar o código: se você enviar tensão para o `GPIO 2`, o LED acende ou apaga, dependendo da PCB.
-#### 1.4 Mapeamento dos Pinos da PCB (Pin-Out)
+### `6.2.4` Mapeamento dos Pinos do módulo PCB NodeMCU V2 (Pin-Out)
 **GPIO** General Purpose Input/Output ou *Entrada e Saída de Propósito Geral*
 
 Na PCB você verá pinos com nome `D0`, `D1`, etc... Esses nomes são "apelidos", ou seja, nomes mais amigáveis dos pinos para facilitar a identificação dos pinos na placa. Para a CPU do ESP8266, os pinos são conhecidos como `GPIO 0`, `GPIO 16`, etc. Então vamos mapear para que serve cada pino da PCB do NodeMCU V2.
@@ -281,11 +374,10 @@ Na PCB você verá pinos com nome `D0`, `D1`, etc... Esses nomes são "apelidos"
     </tr>
 </table>
 
-
-### `1.5.3` Módulo Relé 5V
+## `6.3` Módulo Relé 5V
 ![Relé 5V](/assets/modulo-rele-5V.jpg)
 
-## `1.6` Montagem do Hardware no Protoboard
+# `7.` Montagem do Hardware no Protoboard
 
 Vamos dividir o processo de montagem em 2 etapas:
 - Simulação na Protoboard
@@ -293,32 +385,33 @@ Vamos dividir o processo de montagem em 2 etapas:
 
 Para garantir o sucesso e, acima de tudo, a sua segurança, o seu plano de dividir o projeto em duas etapas (uma simulação de baixa tensão e depois a instalação real) é perfeito. Como você vai lidar com a rede elétrica da escola (127V ou 220V), todo cuidado é crucial para evitar curtos-circuitos e choques elétricos.
 
-------------------------------
 ## ETAPA 1: A Simulação Segura na Protoboard (Com LED)
 Nesta etapa, o computador alimenta o NodeMCU via cabo micro-USB. Vamos fazer o chip acionar o relé, e o relé vai acender um LED comum na protoboard, simulando a campainha.
-## Ligações do NodeMCU para o Módulo Relé:
+### Ligações do NodeMCU para o Módulo Relé:
 
    1. Conecte o pino GND do NodeMCU ao pino GND (ou -) do Relé.
    2. Conecte o pino 3V3 do NodeMCU ao pino VCC (ou +) do Relé.
    3. Conecte o pino D1 (que é o GPIO 5 no seu código C) ao pino IN (Sinal) do Relé.
 
-## Ligações do Relé para o LED (Simulando o Interruptor):
-Os módulos relé possuem 3 bornes de parafuso: NO (Normally Open / Normalmente Aberto), COM (Comum) e NC (Normally Closed / Normalmente Fechado). [1] 
+### Ligações do Relé para o LED (Simulando o Interruptor):
+Os módulos relé possuem 3 bornes de parafuso: NO (Normally Open / Normalmente Aberto), COM (Comum) e NC (Normally Closed / Normalmente Fechado).
 
    1. Espete um resistor de 220 Ohms na protoboard, ligando o pino 3V3 do NodeMCU até a perna mais longa (Anodo/Positivo) do LED.
    2. Conecte um jumper do pino COM (Comum) do relé até a perna mais curta (Catodo/Negativo) do LED.
    3. Conecte outro jumper do pino NO (Normalmente Aberto) do relé até o pino GND do NodeMCU. [2] 
 
 Como funciona a simulação: Quando o código C der o comando para ligar o GPIO 5, o relé vai "estalar" e fechar o contato interno entre o COM e o NO. Isso vai fechar o circuito do terra (GND), e o LED vai acender. Quando o chip desligar o pino, o LED apaga.
+
 ------------------------------
+
 ## ETAPA 2: A Instalação Real na Tomada/Parede
 Após testar tudo com o LED e ver que o tempo e os horários estão batendo com o script do Windows 11, você vai levar o circuito para a parede.
-## ⚠️ REGRAS DE SEGURANÇA OBRIGATÓRIAS:
 
+### ⚠️ REGRAS DE SEGURANÇA OBRIGATÓRIAS:
 * Desligue o disjuntor geral ou o disjuntor do circuito da campainha antes de abrir qualquer interruptor na parede.
 * Use uma chave de teste ou multímetro para garantir que não há energia passando pelos fios.
 
-## Como ligar o Relé no lugar do Interruptor:
+### Como ligar o Relé no lugar do Interruptor:
 Um interruptor de parede nada mais é do que uma ponte que interrompe o fio Fase (Positivo). Quando você abrir a caixinha na parede, verá dois fios conectados ao interruptor antigo.
 
    1. Solte os dois fios que estavam parafusados no interruptor de parede.
@@ -327,41 +420,14 @@ Um interruptor de parede nada mais é do que uma ponte que interrompe o fio Fase
    4. Parafuse o outro fio no borne NO (Normalmente Aberto) do relé.
 
 (Isso faz com que o relé assuma exatamente o papel do interruptor físico. Quando o chip acionar o relé, ele une esses dois fios eletronicamente, fazendo a campainha tocar).
-## Como alimentar o NodeMCU na parede?
+### Como alimentar o NodeMCU na parede?
 O chip precisa continuar ligado para processar o código e ouvir o computador. Como ele não pode ser alimentado pelos fios da campainha de alta tensão:
 
    1. Deixe o cabo micro-USB conectado no NodeMCU.
    2. Plugue a outra ponta do cabo USB em um carregador de celular comum (5V) e ligue esse carregador em uma tomada próxima.
    3. Se o computador que envia as atualizações de hora via PowerShell estiver longe, você precisará passar um cabo USB longo ou instalar o computador perto desse ponto.
 
-------------------------------
-## O Ajuste no Código C Bare-Metal
-Como alteramos a recomendação técnica de pinos para o GPIO 5 (Pino D1 da placa) para evitar que o relé interfira na inicialização do chip, lembre-se de atualizar o topo do seu arquivo main.c:
-
-#define REG_BASE_GPIO      0x60000300#define GPIO_ENABLE        *(volatile unsigned int *)(REG_BASE_GPIO + 0x0C)#define GPIO_OUT_SET       *(volatile unsigned int *)(REG_BASE_GPIO + 0x04)#define GPIO_OUT_CLEAR     *(volatile unsigned int *)(REG_BASE_GPIO + 0x08)
-// Mudança para o GPIO 5 (Pino D1 do NodeMCU)#define RELAY_PIN          5  
-
-Se você quiser finalizar a preparação do ambiente, prefere que eu te mostre como estruturar os comandos finais de compilação no VS Code ou quer entender melhor como garantir que o módulo relé que você comprou usa lógica invertida ou direta?
-
-[1] [https://www.usinainfo.com.br](https://www.usinainfo.com.br/blog/projetos-com-arduino-nano-como-ligar-lampada-com-arduino/)
-[2] [https://aluno.escoladigital.pr.gov.br](https://aluno.escoladigital.pr.gov.br/sites/alunos/arquivos_restritos/files/documento/2021-05/aula_13_push_button.pdf)
-
-
-
-
-
-* VCC do ESP8266 $\rightarrow$ 3.3V do Arduino (Atenção: O ESP8266 queima com 5V e consome muita corrente, se ele resetar sozinho, precisará de uma fonte externa de 3.3V).
-* GND do ESP8266 -> GND do Arduino (Unificar as massas).
-* TX do ESP8266 -> TX do Arduino.
-* RX do ESP8266 -> RX do Arduino (Use um divisor de tensão com resistores para abaixar os 5V do TX do Arduino para 3.3V no RX do ESP).
-* CH_PD (ou EN) do ESP8266 -> Ligar no 3.3V (Ativa o chip).
-* GPIO 0 do ESP8266 -> Ligar no GND (Isso avisa o chip que ele deve aceitar um código novo via Make/Esptool no momento da inicialização).
-* RESET do Arduino -> Ligar no GND do Arduino (Isso desativa o chip principal do Arduino, transformando a placa em um gravador USB puro).
-
-Quando terminar de gravar o código com o comando make flash, você deve desconectar o GPIO 0 do GND para que o chip execute o seu código em vez de esperar uma gravação.
-Se você quiser avançar, posso te explicar como funciona o mecanismo de interrupção por Timer no ESP8266 em baixo nível para você criar a contagem de tempo sem travar o processador, ou ajudar a encontrar os arquivos de script do Linker (.ld) necessários para o Make. O que prefere ajustar primeiro?
-
-# `2.` Entenda o Universo do Chip
+# `8.` Entenda o Universo do Chip
 A palavra "chip" vem do inglês arcaico *cipp*, que significa "**lasca**" ou "**fragmento**". O termo foi adotado de forma metafórica para descrever os minúsculos pedaços de silícios que contém ciruitos eletrônicos.
 
 É comum confundir os termos "Circuitos Integrados" e "Chips".
